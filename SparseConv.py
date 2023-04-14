@@ -65,19 +65,13 @@ class SparseConvNet(nn.Module):
         super().__init__()
 
         self.SparseLayer1 = SparseConv(input_channels, 256, 9)
-        self.SparseLayer2 = SparseConv(256, 384, 7)
-        self.SparseLayer3 = SparseConv(384, 512, 5)
-        self.SparseLayer4 = SparseConv(512, 768, 3)
-        self.SparseLayer5 = SparseConv(768, 896, 3)
-        self.SparseLayer6 = SparseConv(896, input_channels, 1)
+        self.SparseLayer2 = SparseConv(256, 256, 7)
+        self.SparseLayer6 = SparseConv(256, input_channels, 1)
 
     def forward(self, x, mask):
         x = x * mask        
         x, mask = self.SparseLayer1(x, mask)
         x, mask = self.SparseLayer2(x, mask)
-        x, mask = self.SparseLayer3(x, mask)
-        x, mask = self.SparseLayer4(x, mask)
-        x, mask = self.SparseLayer5(x, mask)
         x, mask = self.SparseLayer6(x, mask)
 
         return x
